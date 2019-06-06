@@ -13,6 +13,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameEngine extends SurfaceView implements Runnable {
     private final String TAG = "SPARROW";
@@ -39,12 +40,17 @@ public class GameEngine extends SurfaceView implements Runnable {
 
     // SPRITES
     Square bullet;
-    int SQUARE_WIDTH = 100;
+    int SQUARE_WIDTH = 300;
 
     Square enemy;
 
     Sprite player;
     Sprite sparrow;
+    Sprite cat;
+    Square cage;
+
+    int randmX;
+    int randmY;
 
     ArrayList<Square> bullets = new ArrayList<Square>();
 
@@ -53,6 +59,14 @@ public class GameEngine extends SurfaceView implements Runnable {
 
     public GameEngine(Context context, int screenW, int screenH) {
         super(context);
+
+
+//        //generate random number for sparrow
+
+
+        final int randomX = new Random().nextInt(600) + 200;
+        final int randomY = new Random().nextInt(300) + 400;
+
 
         // intialize the drawing variables
         this.holder = this.getHolder();
@@ -70,8 +84,14 @@ public class GameEngine extends SurfaceView implements Runnable {
 
 
         // initalize sprites
-        this.player = new Sprite(this.getContext(), 100, 700, R.drawable.player64);
-        this.sparrow = new Sprite(this.getContext(), 500, 200, R.drawable.bird64);
+        this.player = new Sprite(this.getContext(), 100, screenHeight - 500, R.drawable.player64);
+        this.sparrow = new Sprite(this.getContext(), randomX, randomY, R.drawable.bird64);
+        this.cat = new Sprite(this.getContext(), screenWidth - 300, screenHeight - 500, R.drawable.cat64);
+//        this.enemy = new Square(this.getContext(), screenWidth - 400, 150, SQUARE_WIDTH);
+
+        this.cage = new Square(this.getContext(), screenWidth - 400, 150, SQUARE_WIDTH);
+
+
     }
 
     @Override
@@ -83,8 +103,13 @@ public class GameEngine extends SurfaceView implements Runnable {
         }
     }
 
+        boolean movingRight = true;
+
     // Game Loop methods
     public void updateGame() {
+
+
+
     }
 
 
@@ -129,6 +154,19 @@ public class GameEngine extends SurfaceView implements Runnable {
 
             // 2. sparrow
             canvas.drawBitmap(this.sparrow.getImage(), this.sparrow.getxPosition(), this.sparrow.getyPosition(), paintbrush);
+
+            // 3. cat
+            canvas.drawBitmap(this.cat.getImage(), this.cat.getxPosition(), this.cat.getyPosition(), paintbrush);
+
+            // 4. Cage
+            paintbrush.setColor(Color.BLUE);
+            paintbrush.setStyle(Paint.Style.STROKE);
+            canvas.drawRect(this.cage.getxPosition(),
+                    this.cage.getyPosition(),
+                    this.cage.getxPosition() + this.cage.getWidth(),
+                    this.cage.getyPosition() + this.cage.getWidth(),
+                    paintbrush);
+
 
             // --------------------------------------------------------
             // draw hitbox on player
