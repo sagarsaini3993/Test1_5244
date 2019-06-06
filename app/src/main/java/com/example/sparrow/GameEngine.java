@@ -103,10 +103,27 @@ public class GameEngine extends SurfaceView implements Runnable {
         }
     }
 
-        boolean movingRight = true;
+        boolean movingLeft = true;
 
     // Game Loop methods
     public void updateGame() {
+
+        // Moving cage to left and right
+        if(movingLeft == true) {
+            this.cage.setxPosition(this.cage.getxPosition() + 20);
+            if(this.cage.getxPosition() >= this.screenWidth - 280)
+            {
+                movingLeft = false;
+            }
+        }
+        if(movingLeft == false)
+        {
+            this.cage.setxPosition(this.cage.getxPosition() -20);
+            if(this.cage.getxPosition()<=0)
+            {
+                movingLeft = true;
+            }
+        }
 
 
 
