@@ -18,6 +18,9 @@ import java.util.Random;
 public class GameEngine extends SurfaceView implements Runnable {
     private final String TAG = "SPARROW";
 
+
+
+
     // game thread variables
     private Thread gameThread = null;
     private volatile boolean gameIsRunning;
@@ -60,9 +63,14 @@ public class GameEngine extends SurfaceView implements Runnable {
     public GameEngine(Context context, int screenW, int screenH) {
         super(context);
 
+        // make bullets
+        this.bullets.add(new Square(context, 100, 600, 50));
+        this.bullets.add(new Square(context, 150, 450, 50));
+        this.bullets.add(new Square(context, 200, 300, 50));
+        this.bullets.add(new Square(context, 300, 150, 50));
+
 
 //        //generate random number for sparrow
-
 
         final int randomX = new Random().nextInt(600) + 200;
         final int randomY = new Random().nextInt(300) + 400;
@@ -167,6 +175,12 @@ public class GameEngine extends SurfaceView implements Runnable {
             }
         }
 
+        // Moving bullets
+
+
+
+
+
 
 
 
@@ -228,6 +242,64 @@ public class GameEngine extends SurfaceView implements Runnable {
                     this.cage.getyPosition() + this.cage.getWidth(),
                     paintbrush);
 
+            // 5. draw bullets
+
+            // DRAW ALL THE BULLETS
+//                        for (int i = 0; i < this.bullets.size(); i++) {
+//                            // 1. get the (x,y) of the bullet
+//                            Square b = this.bullets.get(i);
+//
+//                            int x = b.getxPosition();
+//                            int y = b.getyPosition();
+//
+//                            // 2. draw the bullet
+//                            paintbrush.setColor(Color.BLACK);
+//                            paintbrush.setStyle(Paint.Style.FILL);
+//                            canvas.drawRect(
+//                                    x,
+//                                    y,
+//                                    x + b.getWidth(),
+//                                    y + b.getWidth(),
+//                                    paintbrush
+//                            );
+//
+//
+//                            // 3. draw the bullet's hitbox
+//                            paintbrush.setColor(Color.GREEN);
+//                            paintbrush.setStyle(Paint.Style.STROKE);
+//                            canvas.drawRect(
+//                                    b.getHitbox(),
+//                                    paintbrush
+//                            );
+//                        }
+
+
+
+
+
+            for (int i = 0; i < this.bullets.size(); i++) {
+                // 1. get the (x,y) of the bullet
+                Square b = this.bullets.get(i);
+                int x = b.getxPosition();
+                int y = b.getyPosition();
+
+                // 2. draw the bullet
+                paintbrush.setColor(Color.BLACK);
+                paintbrush.setStyle(Paint.Style.FILL);
+                canvas.drawRect(x, y, x+b.getWidth(), y+b.getWidth(), paintbrush);
+
+                // 3. draw the bullet's hitbox
+                paintbrush.setColor(Color.GREEN);
+                paintbrush.setStyle(Paint.Style.STROKE);
+                canvas.drawRect(
+                        b.getHitbox(),
+                        paintbrush
+                );
+            }
+
+//            square = new Sprite(getContext(), 1000,  100, SIZE, SIZE);
+
+
 
             // --------------------------------------------------------
             // draw hitbox on player
@@ -245,6 +317,8 @@ public class GameEngine extends SurfaceView implements Runnable {
             String screenInfo = "Screen size: (" + this.screenWidth + "," + this.screenHeight + ")";
             canvas.drawText(screenInfo, 10, 100, paintbrush);
 
+
+
             // --------------------------------
             holder.unlockCanvasAndPost(canvas);
         }
@@ -261,11 +335,20 @@ public class GameEngine extends SurfaceView implements Runnable {
     }
 
 
+//    public void restartGame(){
+//        run();
+//    }
+
+
+
+
     // Deal with user input
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_UP:
+//                square.x = (int) event.getX();
+//                square.y = (int) event.getY();
                 break;
             case MotionEvent.ACTION_DOWN:
                 break;

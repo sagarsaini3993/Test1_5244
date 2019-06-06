@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
         gameEngine = new GameEngine(this, screenWidth, screenHeight);
         setContentView(gameEngine);
+
+
     }
 
 
