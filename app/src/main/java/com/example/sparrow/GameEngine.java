@@ -68,6 +68,8 @@ public class GameEngine extends SurfaceView implements Runnable {
         final int randomY = new Random().nextInt(300) + 400;
 
 
+
+
         // intialize the drawing variables
         this.holder = this.getHolder();
         this.paintbrush = new Paint();
@@ -89,7 +91,7 @@ public class GameEngine extends SurfaceView implements Runnable {
         this.cat = new Sprite(this.getContext(), screenWidth/3, screenHeight - 500, R.drawable.cat64);
 //        this.enemy = new Square(this.getContext(), screenWidth - 400, 150, SQUARE_WIDTH);
 
-        this.cage = new Square(this.getContext(), screenWidth - 400, 150, SQUARE_WIDTH);
+        this.cage = new Square(this.getContext(), screenWidth - 400, 10, SQUARE_WIDTH);
 
 
     }
@@ -105,6 +107,7 @@ public class GameEngine extends SurfaceView implements Runnable {
 
         boolean movingLeft = true;
         boolean isCatMoving = true;
+        boolean isBirdMoving = true;
 
     // Game Loop methods
     public void updateGame() {
@@ -142,6 +145,25 @@ public class GameEngine extends SurfaceView implements Runnable {
             if(this.cat.getxPosition()<=0)
             {
                 isCatMoving = true;
+            }
+        }
+
+
+        // Moving bird
+
+        if(isBirdMoving == true) {
+            this.sparrow.setxPosition(this.sparrow.getxPosition() + 35);
+            if(this.sparrow.getxPosition() >= this.screenWidth - 280)
+            {
+                isBirdMoving = false;
+            }
+        }
+        if(isBirdMoving == false)
+        {
+            this.sparrow.setxPosition(this.sparrow.getxPosition() - 35);
+            if(this.sparrow.getxPosition()<=0)
+            {
+                isBirdMoving = true;
             }
         }
 
