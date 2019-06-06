@@ -137,7 +137,7 @@ public class GameEngine extends SurfaceView implements Runnable {
             }
         }
 
-
+    cage.updateHitbox();
         // Moving cat left and right
 
         if(isCatMoving == true) {
@@ -156,7 +156,7 @@ public class GameEngine extends SurfaceView implements Runnable {
             }
         }
 
-
+cat.updateHitbox();
         // Moving bird
 
         if(isBirdMoving == true) {
@@ -177,6 +177,25 @@ public class GameEngine extends SurfaceView implements Runnable {
 
         // Moving bullets
 
+         bullet = this.bullets.get(3);
+        if(this.bullet.getHitbox().intersect(this.cage.getHitbox()))
+        {
+            this.cage.setyPosition(this.cage.getxPosition() + 500);
+            cage.updateHitbox();
+
+        }
+        if(this.cage.getHitbox().intersect(this.cat.getHitbox()))
+        {
+           // score = "winner";
+            pauseGame();
+
+
+        }
+        else
+        {
+           // score = "looser";
+
+        }
 
 
 
@@ -305,8 +324,15 @@ public class GameEngine extends SurfaceView implements Runnable {
             // draw hitbox on player
             // --------------------------------------------------------
             Rect r = player.getHitbox();
+            Rect cageHitbox = cage.getHitbox();
+            Rect bulletHitbox = bullet.getHitbox();
+            Rect catHitbox = cat.getHitbox();
             paintbrush.setStyle(Paint.Style.STROKE);
             canvas.drawRect(r, paintbrush);
+            canvas.drawRect(cageHitbox, paintbrush);
+            canvas.drawRect(bulletHitbox, paintbrush);
+            canvas.drawRect(catHitbox, paintbrush);
+
 
 
             // --------------------------------------------------------
